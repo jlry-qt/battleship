@@ -1,3 +1,224 @@
-#btn {
-    border: 20px solid black;
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol,
+ul {
+    list-style: none;
+}
+blockquote,
+q {
+    quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+
+    grid-template-rows: 15%;
+    row-gap: 10px;
+}
+
+#header {
+    background-color: #f5f5f5;
+    box-shadow: 0px 5px 5px #e5e7ec;
+}
+
+#main-div {
+    display: grid;
+    background-color: #ffffff;
+
+    grid-template-columns: 50% 50%;
+}
+
+.split {
+    display: flex;
+
+    justify-content: center;
+}
+
+.board-container {
+    height: fit-content;
+    display: grid;
+    grid-template-areas:
+        '. columns'
+        'rows board';
+
+    gap: 5px;
+}
+
+.board {
+    display: grid;
+    grid-area: board;
+    height: fit-content;
+    width: fit-content;
+
+    --tileSize: 35px;
+    grid-template-columns: repeat(10, var(--tileSize));
+    grid-template-rows: repeat(10, var(--tileSize));
+    gap: 2px;
+}
+
+.tile {
+    background-color: #e8e8e8;
+    border-radius: 5px;
+}
+
+.tile:hover {
+    background-color: #d5d5d4;
+}
+
+.board-columns {
+    display: grid;
+    grid-auto-flow: column;
+    grid-area: columns;
+    grid-template-columns: repeat(10, var(--tileSize));
+
+    justify-items: center;
+    align-items: center;
+    gap: 2px;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #9097a5;
+}
+
+.board-rows {
+    display: grid;
+    grid-area: rows;
+    grid-template-rows: repeat(10, var(--tileSize));
+
+    justify-items: center;
+    align-items: center;
+    gap: 2px;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #9097a5;
 }
