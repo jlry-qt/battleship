@@ -84,6 +84,8 @@ export class Gameboard {
     }
 
     // return false meaning the operation was unsuccesful
+    // Assigns -1 to tile if the hit is empty
+    // Assigs -2 to tile if hit is on ship
     recieveAttack(x, y) {
         const xCoordinate = x
         const yCoordinate = y
@@ -98,7 +100,7 @@ export class Gameboard {
             return false
         }
 
-        // Either 0 if the grid is empty or the ship ID
+        // Assigns either 0 if the grid is empty or the ship ID
         const gridMark = this.grid[yCoordinate][xCoordinate]
 
         if (gridMark === 0) {
@@ -115,7 +117,7 @@ export class Gameboard {
 
         // Trigger hit
         targetShip.hit()
-        this.grid[yCoordinate][xCoordinate] = -1
+        this.grid[yCoordinate][xCoordinate] = -2
 
         if (targetShip.isSunk()) {
             this.ships.delete(gridMark)
