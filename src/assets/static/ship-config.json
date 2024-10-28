@@ -1,0 +1,26 @@
+{
+    "1": {
+        "len": 5,
+        "class": "Carrier"
+    },
+
+    "2": {
+        "len": 4,
+        "class": "Battleship"
+    },
+
+    "3": {
+        "len": 3,
+        "class": "Destroyer"
+    },
+
+    "4": {
+        "len": 3,
+        "class": "Submarine"
+    },
+
+    "5": {
+        "len": 2,
+        "class": "Patrol Boat"
+    }
+}
