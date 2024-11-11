@@ -209,6 +209,10 @@ body {
     z-index: 1;
 }
 
+.dragged {
+    z-index: -1;
+}
+
 /* Ship overlay configs */
 /* Len 5 ship */
 .ship-overlay[data-len='5'][data-dir='vert'] {

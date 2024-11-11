@@ -68,16 +68,72 @@ function enableDragDrop() {
     }
 }
 
+// Copy pasta
+function areElementsOverlapping(elem1, elem2) {
+    const rect1 = elem1.getBoundingClientRect()
+    const rect2 = elem2.getBoundingClientRect()
+
+    return !(
+        (
+            rect1.right < rect2.left || // elem1 is to the left of elem2
+            rect1.left > rect2.right || // elem1 is to the right of elem2
+            rect1.bottom < rect2.top || // elem1 is above elem2
+            rect1.top > rect2.bottom
+        ) // elem1 is below elem2
+    )
+}
+
 const dragDropManager = (() => {
-    let dragableObject = null
+    let draggableObject = null
+    let parentElement = null
 
     function drop(targetTile) {
-        targetTile.appendChild(dragableObject)
-        dragableObject = null
+        const shipObjects = playerBoardElem.querySelectorAll('.ship-overlay')
+        const x = targetTile.dataset.x - 0 // Minus zero to convert them to number
+        const y = targetTile.dataset.y - 0
+
+        const shipDirection = draggableObject.dataset.dir
+        const shipLength = draggableObject.dataset.len - 1 // to match zero index coordinates
+
+        // Prevent from placing out of range
+        if (shipDirection === 'vert') {
+            const result = x + shipLength
+
+            if (result > 9) {
+                return
+            }
+        } else {
+            const result = y + shipLength
+
+            if (result > 9) {
+                return
+            }
+        }
+
+        targetTile.appendChild(draggableObject)
+
+        for (let ship of shipObjects) {
+            if (ship === draggableObject) {
+                continue
+            }
+
+            if (areElementsOverlapping(draggableObject, ship)) {
+                parentElement.appendChild(draggableObject) // Revert back to original position
+                return
+            }
+        }
     }
 
     playerBoardElem.addEventListener('dragstart', (ev) => {
-        dragableObject = ev.target
+        draggableObject = ev.target
+        parentElement = ev.target.parentElement
+        draggableObject.classList.add('dragged')
+    })
+
+    playerBoardElem.addEventListener('dragend', (ev) => {
+        draggableObject.classList.remove('dragged')
+        parentElement = null
+        draggableObject = null
     })
 
     return { drop }
