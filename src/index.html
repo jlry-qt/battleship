@@ -6,9 +6,11 @@
         <title>Battleship</title>
     </head>
     <body>
-        <div id="header"></div>
         <div id="main-div">
             <div class="split">
+                <div id="player-board-indicator" class="board-indicator">
+                    Your Board
+                </div>
                 <div class="board-container">
                     <div class="board-columns">
                         <span>A</span>
@@ -36,8 +38,14 @@
                     </div>
                     <div id="pla-board" class="board"></div>
                 </div>
+                <div class="shipyard" id="player-shipyard">
+                    <span class="shipyard-text"> Shipyard </span>
+                </div>
             </div>
             <div class="split">
+                <div id="enemy-board-indicator" class="board-indicator">
+                    Enemy Board
+                </div>
                 <div class="board-container">
                     <div class="board-columns">
                         <span>A</span>
@@ -64,6 +72,9 @@
                         <span>10</span>
                     </div>
                     <div id="comp-board" class="board"></div>
+                </div>
+                <div class="shipyard" id="enemy-shipyard">
+                    <span class="shipyard-text"> Enemy Shipyard </span>
                 </div>
             </div>
         </div>

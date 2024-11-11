@@ -139,26 +139,21 @@ body {
     height: 100vh;
     width: 100vw;
 
-    grid-template-rows: 15%;
     row-gap: 10px;
-}
-
-#header {
-    background-color: #f5f5f5;
-    box-shadow: 0px 5px 5px #e5e7ec;
+    /* overflow: hidden; */
 }
 
 #main-div {
     display: grid;
     background-color: #ffffff;
 
-    grid-template-columns: 50% 50%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .split {
-    display: flex;
-
-    justify-content: center;
+    display: grid;
+    justify-items: center;
+    grid-template-rows: 0.2fr repeat(2, minmax(0, 1fr));
 }
 
 .board-container {
@@ -184,12 +179,76 @@ body {
 }
 
 .tile {
-    background-color: #e8e8e8;
+    user-select: none;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
     border-radius: 5px;
+    background-color: #e8e8e8;
 }
 
-.tile:hover {
+.tile:hover,
+.tile.hover {
     background-color: #d5d5d4;
+}
+
+.ship-overlay {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    background-color: #e2dddf;
+    border: 3px solid #404041;
+    border-radius: 10px;
+
+    z-index: 1;
+}
+
+/* Ship overlay configs */
+/* Len 5 ship */
+.ship-overlay[data-len='5'][data-dir='vert'] {
+    height: calc(var(--tileSize) * 5 + (2px * 4));
+    width: var(--tileSize);
+}
+.ship-overlay[data-len='5'][data-dir='horiz'] {
+    height: var(--tileSize);
+    width: calc(var(--tileSize) * 5 + (2px * 4));
+}
+
+/* Len 4 ship */
+.ship-overlay[data-len='4'][data-dir='vert'] {
+    height: calc(var(--tileSize) * 4 + (2px * 3));
+    width: var(--tileSize);
+}
+
+.ship-overlay[data-len='4'][data-dir='horiz'] {
+    height: var(--tileSize);
+    width: calc(var(--tileSize) * 4 + (2px * 3));
+}
+
+/* Len 3 ship */
+.ship-overlay[data-len='3'][data-dir='vert'] {
+    height: calc(var(--tileSize) * 3 + (2px * 2));
+    width: var(--tileSize);
+}
+.ship-overlay[data-len='3'][data-dir='horiz'] {
+    height: var(--tileSize);
+    width: calc(var(--tileSize) * 3 + (2px * 2));
+}
+
+/* Len 2 ship */
+.ship-overlay[data-len='2'][data-dir='vert'] {
+    height: calc(var(--tileSize) * 2 + (2px * 1));
+    width: var(--tileSize);
+}
+.ship-overlay[data-len='2'][data-dir='horiz'] {
+    height: var(--tileSize);
+    width: calc(var(--tileSize) * 2 + (2px * 1));
 }
 
 .board-columns {
@@ -221,4 +280,43 @@ body {
     font-size: 1.15rem;
     font-weight: 800;
     color: #9097a5;
+}
+
+.board-indicator {
+    height: fit-content;
+    width: fit-content;
+    padding: 10px 100px 10px 100px;
+    border-radius: 5px;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.15rem;
+    font-weight: 900;
+}
+
+#player-board-indicator {
+    background-color: #fc014c;
+    color: white;
+}
+
+#enemy-board-indicator {
+    background-color: #65708b;
+    color: white;
+}
+
+.shipyard {
+    position: relative;
+    display: flex;
+    /* height:  */
+    /* width: 100%; */
+    /* align-items: center; */
+}
+
+.shipyard-text {
+    position: absolute;
+    margin: 100% 0% 100% 0%;
+    left: 0;
+    transform: rotate(-90deg);
+    color: #6d707e;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900;
 }
