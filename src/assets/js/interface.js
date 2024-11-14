@@ -51,11 +51,11 @@ function enableDragDrop() {
     const tiles = playerBoardElem.querySelectorAll('.tile')
     for (const element of tiles) {
         element.addEventListener('dragenter', (ev) => {
-            ev.target.classList.add('hover') // For target indicator
+            ev.target.classList.add('hover') // For target tile indicator
         })
 
         element.addEventListener('dragleave', (ev) => {
-            ev.target.classList.remove('hover') // For target indicator
+            ev.target.classList.remove('hover') // For target tile indicator
         })
 
         element.addEventListener('dragover', (ev) => {
@@ -69,9 +69,9 @@ function enableDragDrop() {
 }
 
 // Copy pasta
-function areElementsOverlapping(elem1, elem2) {
-    const rect1 = elem1.getBoundingClientRect()
-    const rect2 = elem2.getBoundingClientRect()
+function areElementsOverlapping(shipElem1, shipElem2) {
+    const rect1 = shipElem1.getBoundingClientRect()
+    const rect2 = shipElem2.getBoundingClientRect()
 
     return !(
         (
@@ -83,34 +83,33 @@ function areElementsOverlapping(elem1, elem2) {
     )
 }
 
+// Take is in the shipElemen and new direction to be set.
+function outOfBoard(shipElem) {
+    const initialX = shipElem.parentElement.dataset.x - 0 // converts into number
+    const initialY = shipElem.parentElement.dataset.y - 0 // convert into number
+    const shipLen = shipElem.dataset.len - 1
+    const dir = shipElem.dataset.dir
+
+    if (dir === 'vert') {
+        return initialX + shipLen > 9
+    } else if (dir === 'horiz') {
+        return initialY + shipLen > 9
+    }
+}
+
 const dragDropManager = (() => {
     let draggableObject = null
     let parentElement = null
 
     function drop(targetTile) {
         const shipObjects = playerBoardElem.querySelectorAll('.ship-overlay')
-        const x = targetTile.dataset.x - 0 // Minus zero to convert them to number
-        const y = targetTile.dataset.y - 0
-
-        const shipDirection = draggableObject.dataset.dir
-        const shipLength = draggableObject.dataset.len - 1 // to match zero index coordinates
-
-        // Prevent from placing out of range
-        if (shipDirection === 'vert') {
-            const result = x + shipLength
-
-            if (result > 9) {
-                return
-            }
-        } else {
-            const result = y + shipLength
-
-            if (result > 9) {
-                return
-            }
-        }
 
         targetTile.appendChild(draggableObject)
+
+        if (outOfBoard(draggableObject)) {
+            parentElement.appendChild(draggableObject)
+            return
+        }
 
         for (let ship of shipObjects) {
             if (ship === draggableObject) {
@@ -139,4 +138,37 @@ const dragDropManager = (() => {
     return { drop }
 })()
 
+function changeDirection(el) {
+    const shipObjects = playerBoardElem.querySelectorAll('.ship-overlay')
+    const initialDir = el.dataset.dir
+
+    if (initialDir === 'vert') {
+        el.dataset.dir = 'horiz'
+    } else {
+        el.dataset.dir = 'vert'
+    }
+
+    // Prevent out of range
+    if (outOfBoard(el)) {
+        el.dataset.dir = initialDir
+    }
+
+    // Prevent from overlapping
+    for (let ship of shipObjects) {
+        if (ship === el) {
+            continue
+        }
+
+        if (areElementsOverlapping(el, ship)) {
+            el.dataset.dir = initialDir
+            return
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', initiateBoardInterface)
+playerBoardElem.addEventListener('click', (ev) => {
+    if (ev.target.classList.contains('ship-overlay')) {
+        changeDirection(ev.target)
+    }
+})
