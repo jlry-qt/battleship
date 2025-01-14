@@ -75,7 +75,7 @@ describe('Placing ships', () => {
         const x = 0
         const y = 2
 
-        board.placeShip(x, y, ship, 'vertical')
+        board.placeShip(x, y, ship, 'vert')
 
         expect(board.grid).toStrictEqual([
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -97,7 +97,7 @@ describe('Placing ships', () => {
         const x = 0
         const y = 0
 
-        board.placeShip(x, y, ship, 'vertical')
+        board.placeShip(x, y, ship, 'vert')
 
         expect(board.grid).toStrictEqual([
             [5, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -208,7 +208,7 @@ describe('Placing ships', () => {
 
         board.placeShip(1, 1, ship)
         expect(board.ships.size).toBe(1)
-        expect(board.ships.get(shipId)).toBe(ship)
+        expect(board.ships.get(shipId).ship).toBe(ship)
     })
 
     test('Track multiple ships placed on board', () => {
@@ -216,7 +216,7 @@ describe('Placing ships', () => {
             let ship = new Ship(id)
             board.placeShip(id, id, ship)
 
-            expect(board.ships.get(id)).toBe(ship)
+            expect(board.ships.get(id).ship).toBe(ship)
         }
 
         expect(board.ships.size).toBe(5)
@@ -332,7 +332,7 @@ describe('Board recieving attack', () => {
         board.placeShip(0, 0, ship)
         board.recieveAttack(0, 0)
 
-        expect(board.ships.get(shipId).hits).toBe(1)
+        expect(board.ships.get(shipId).ship.hits).toBe(1)
         // Maybe add more test?
     })
 
@@ -341,7 +341,7 @@ describe('Board recieving attack', () => {
         const shipTwo = new Ship(2)
 
         board.placeShip(0, 2, shipOne)
-        board.placeShip(5, 5, shipTwo, 'vertical')
+        board.placeShip(5, 5, shipTwo, 'vert')
 
         for (let i = 0; i <= 4; i++) {
             board.recieveAttack(i, 2)

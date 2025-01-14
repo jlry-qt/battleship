@@ -209,6 +209,20 @@ body {
     z-index: 1;
 }
 
+.ship-overlay.opac {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    background-color: #e2dddf;
+    border: 3px solid #404041;
+    border-radius: 10px;
+    opacity: 70%;
+
+    z-index: 1;
+}
+
 .dragged {
     z-index: -1;
 }
@@ -309,18 +323,34 @@ body {
 
 .shipyard {
     position: relative;
-    display: flex;
-    /* height:  */
-    /* width: 100%; */
-    /* align-items: center; */
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 0.1fr 1fr;
+    grid-auto-flow: row;
 }
 
+.shipyard-ships,
 .shipyard-text {
-    position: absolute;
-    margin: 100% 0% 100% 0%;
-    left: 0;
-    transform: rotate(-90deg);
     color: #6d707e;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 900;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.shipyard-ships {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.marked::before {
+    content: '🔴';
+    position: absolute;
+}
+
+.hit::before {
+    content: '❌';
+    position: absolute;
 }
